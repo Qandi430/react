@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="new-status">
+        <h2>New monolog</h2>
+        <form action="">
+            <textarea></textarea><br>
+            <input type="submit" value="Post">
+        </form>
+    </div>
+
+    <div class="statuses">
+        <h2>Monologs</h2>
+        <ul></ul>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.new-status form').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '/status',
+                type: 'POST',
+                dataType: 'json',
+                data: { text: $('.new-status').find('textarea').val() },
+                success: function(data) {
+                    $('.statuses').append('<li>' + data.text + '</li>');
+                    $('.new-status').find('textarea').val('');
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
